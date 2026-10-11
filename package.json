@@ -1,0 +1,22 @@
+{
+  "name": "club42-tokenizer",
+  "version": "1.0.0",
+  "description": "Club42 fixed-supply ERC-20 token for 42 Tokenizer",
+  "scripts": {
+    "compile": "node deployment/compile.cjs",
+    "test": "npm run compile && node code/tests/token.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@openzeppelin/contracts": "5.4.0"
+  },
+  "devDependencies": {
+    "ethers": "6.15.0",
+    "ganache": "7.9.2",
+    "solc": "0.8.30"
+  },
+  "private": true
+}
