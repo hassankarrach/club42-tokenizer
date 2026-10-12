@@ -23,7 +23,7 @@ Starting with owner A holding 42,000 tokens and member B holding none:
 
 | Action                      | A balance | B balance | B allowance from A |
 | ---                         | ---:      | ---:      | ---:               |
-| A sends B 100               | 41,900    | 100       | 0                  |                
+| A sends B 100               | 41,900    | 100       | 0                  |
 | A approves B for 25         | 41,900    | 100       | 25                 |
 | B spends 10 from A to B     | 41,890    | 110       | 15                 |
 | A approves B for 0          | 41,890    | 110       | 0                  |
