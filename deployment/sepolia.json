@@ -1,0 +1,10 @@
+{
+  "network": "Sepolia",
+  "chainId": 11155111,
+  "contractAddress": "0x200c145609fDC02067f8b629368BA397153B9598",
+  "deployer": "0xA798E1210b6e5803Bf491944713Bb5BB5ed3D330",
+  "transactionHash": "0x5f2e5deecf70da9a1d0c9d97cdc267cdd9928c5403d8d911639e17c904812e5f",
+  "blockNumber": 11888821,
+  "explorer": "https://sepolia.etherscan.io/address/0x200c145609fDC02067f8b629368BA397153B9598",
+  "sourceVerification": "verified (exact match)"
+}

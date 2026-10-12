@@ -1,24 +1,29 @@
-# Club42
+# Concept and security
 
-Club42 is a demonstration of wallet-controlled club credits. Five fictional members can hold and transfer CLUB42 credits, with a shared reserve intended for the future multisig bonus.
+Club42 represents internal club credits held by member wallets. It implements ERC-20 on Sepolia. The blockchain lets members independently verify supply, balances, and transactions; a centralized database would be simpler if that independence were unnecessary.
 
-## Why blockchain?
+## Supply and permissions
 
-Members can independently verify supply, balances, and transactions and control their holdings with their own wallets. Shared reserve approval is a separate multisig feature, not provided by the base ERC-20 contract. A trusted central administrator and database would be simpler if shared control were unnecessary.
+The constructor creates **42,000 CLUB42** for the deployer. Tokens use 18 decimals: one CLUB42 is `10^18` integer units. Transfers change balances, not total supply.
 
-## Base contract
+There is no privileged owner role, later minting, public burning, freezing, or seizure. The deployer controls its initial reserve like any holder controls its balance. Shared treasury control requires the unimplemented multisig bonus.
 
-- Name: Club42
-- Symbol: CLUB42
-- Standard: ERC-20
-- Decimals: 18
-- Supply: 42,000 tokens, created only during deployment
-- Initial holder: deployer
-- No post-deployment mint function, account freezing, seizure, or privileged owner role
-- Transfers and standard allowance-based spending provided by OpenZeppelin ERC20
+| Function | Purpose |
+| --- | --- |
+| `name`, `symbol`, `decimals` | Read token metadata |
+| `totalSupply`, `INITIAL_SUPPLY` | Read current and initial supply |
+| `balanceOf(account)` | Read a holder's balance |
+| `transfer(to, amount)` | Send the caller's tokens |
+| `approve(spender, amount)` | Set permission to spend the caller's tokens |
+| `allowance(owner, spender)` | Read remaining permission |
+| `transferFrom(from, to, amount)` | Spend tokens using the caller's allowance |
 
-The deployer initially controls the reserve. Until the reserve is moved to an implemented multisig contract, it is not collectively controlled. Tokens confer no implemented voting, legal ownership, redemption, or monetary-value guarantees.
+The constructor is student code; standard token operations come from OpenZeppelin. Successful movements emit `Transfer` events; approvals emit `Approval` events.
 
-## Planned demonstration
+## Security limits
 
-Deploy on a public testnet, distribute credits to member wallets, transfer between members, demonstrate approved spending, and show rejected overspending. For the bonus, place reserve tokens in a multisig treasury and demonstrate threshold approvals before a distribution.
+- Whoever controls a wallet's key controls its tokens. The contract cannot recover lost keys or reverse completed transfers.
+- Approval moves no tokens, but lets the spender choose the recipient. Approve only trusted addresses. To change a non-zero allowance, revoke it and wait before granting another; a spender may still spend before revocation confirms.
+- The contract rejects insufficient balances, insufficient allowances, and zero-address transfers. The React interface does not enforce the blockchain's rules; the contract does.
+- SepoliaETH pays gas; CLUB42 does not. Reads need no wallet signature. Submitted transactions can cost gas even when they revert.
+- Tokens implement no voting, redemption, legal ownership, or value guarantee. Tests and explorer verification are not a security audit.

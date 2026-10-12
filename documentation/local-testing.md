@@ -1,9 +1,9 @@
 # Local testing
 
-Run `npm test` from the project root. The command compiles Club42, launches an in-memory Ganache chain, deploys with ethers, checks operations, and disconnects the chain. The accounts and funds are disposable. No public network, wallet extension, or real funds are used.
+With Node 22 and dependencies installed, run `npm test` from the repository root.
 
-Checks: metadata and initial supply; deployer balance; transfer balances and unchanged supply; rejected overspending and zero-address recipients; spending without approval; allowance creation; delegated spending and allowance reduction; rejected allowance overspending; approval revocation; no public mint function.
+The command compiles Club42, starts a temporary in-memory Ganache chain with three funded test accounts, executes the bytecode, and checks results using ethers and Node assertions. No peers, MetaMask, public RPC, or real funds are needed. The chain is discarded afterward.
 
-Rejection checks simulate calls and assert the expected contract error. Successful operations submit transactions and wait for receipts.
+Checks cover metadata, initial supply/balance, transfers, unchanged supply, rejected overspending and zero-address transfers, approvals, delegated spending, allowance limits, and revocation. Rejections use simulations and check the expected custom error; successful writes wait for transaction receipts. The ABI is also checked for absence of a function named `mint` (not a general proof against hidden minting).
 
-Ganache and solc are development-only tooling. The installation reports dependency audit findings; this local harness should not be exposed as a hosted service. The contract itself imports only OpenZeppelin ERC20.
+School Linux tests passed with Node 22.23.3. Ganache's native acceleration warning is acceptable when its JavaScript fallback completes all assertions. Node 12 is too old. Development dependencies have reported audit findings; keep the local harness private. These tests validate contract behavior, not distributed consensus or security against every attack.

@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Club42 fixed-supply ERC-20 token for 42 Tokenizer",
   "scripts": {
+    "client:dev": "vite --config client/vite.config.mjs",
+    "client:build": "vite build --config client/vite.config.mjs",
+    "verification:input": "node deployment/verification-input.cjs",
+    "deploy:local": "npm run compile && node deployment/serve.cjs",
     "compile": "node deployment/compile.cjs",
     "test": "npm run compile && node code/tests/token.cjs"
   },
@@ -16,7 +20,10 @@
   "devDependencies": {
     "ethers": "6.15.0",
     "ganache": "7.9.2",
-    "solc": "0.8.30"
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "solc": "0.8.30",
+    "vite": "7.1.12"
   },
   "private": true
 }

@@ -1,12 +1,7 @@
-# Documentation checklist
+# Documentation
 
-- What the token represents and its intended use
-- Platform, standard, tooling, and supply-policy rationale
-- Public functions and token amount/decimal conventions
-- Ownership, permissions, and security assumptions
-- Installation, tests, deployment, and interaction instructions
-- Public test-network name, contract address, and explorer link
-- Reproducible evaluation demonstration
-- Multisig design and demonstration, if implemented
-
-A demo video is optional and does not increase the grade under subject v1.1.
+- [Concept and security](concept.md): purpose, supply, permissions, and limitations.
+- [Usage](usage.md): wallet connection, transfers, approvals, and a short demonstration.
+- [Local testing](local-testing.md): what the automated checks prove.
+- [Deployment](../deployment/README.md): reproduce deployment and explorer verification.
+- [Subject v1.1](subject-v1.1.txt): full user-provided requirements.
