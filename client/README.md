@@ -7,3 +7,5 @@ The client uses the existing contract in `deployment/sepolia.json`; no redeploym
 See [usage and demonstration](../documentation/usage.md) for operations. If changing accounts in MetaMask does not update the page, click **Switch account** and authorize the intended account for this site.
 
 Production build, public reads, account selection, transfers, approvals, delegated spending, revocation, and decoded rejection were exercised. Wrong-network and cancellation flows still need manual review. Hosting is not configured.
+
+**Treasury** shows the existing two-of-three reserve and proposals, with organizer-only propose/approve/execute controls. See [multisig usage](../documentation/multisig.md#react-treasury-controls).

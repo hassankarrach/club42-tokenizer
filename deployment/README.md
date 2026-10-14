@@ -37,3 +37,15 @@ On the contract's Sepolia Etherscan page, choose **Verify and Publish**:
 - Constructor arguments: empty; contract: `Club42.sol:Club42` if asked
 
 The JSON specifies optimizer enabled, 200 runs, Paris EVM. Etherscan compares compilation with deployed code; verification needs no gas and is not a security audit. Confirm **Exact Match** before recording verification success.
+
+## Deploy the bonus treasury
+
+Run `npm run deploy:local`, then open **http://127.0.0.1:4243/treasury**. The root page deploys a token; use `/treasury` for the bonus. Connect the intended signing account on Sepolia and review the token, all three organizers, threshold, and fee before deploying. Configuration is in `treasury-config.json`; signers cannot be changed after deployment. No tokens are moved automatically.
+
+After confirmation, save the address and transaction hash. Generate the explorer files:
+
+```sh
+npm run verification:input -- Club42Treasury
+```
+
+Use the same compiler/license as the token. Upload `artifacts/Club42Treasury.standard-input.json`, select `Club42Treasury.sol:Club42Treasury` if asked, and paste `artifacts/Club42Treasury.constructor-args.txt` if constructor arguments are requested. Arguments must match the configuration actually deployed. Record treasury address only after confirmed deployment. Source verification and reserve funding are separate steps.

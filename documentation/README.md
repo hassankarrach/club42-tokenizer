@@ -5,3 +5,4 @@
 - [Local testing](local-testing.md): what the automated checks prove.
 - [Deployment](../deployment/README.md): reproduce deployment and explorer verification.
 - [Subject v1.1](subject-v1.1.txt): full user-provided requirements.
+- [Multisig bonus](multisig.md): treasury rules, tests, and limitations.

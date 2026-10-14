@@ -2,7 +2,7 @@
 
 Club42 is a fixed-supply token representing internal club credits. Members hold and transfer credits using their wallets.
 
-Deployed on **Sepolia** and source-verified on Etherscan (Exact Match). Local tests pass; public transfers, approvals, delegated spending, and revocation were demonstrated. React is implemented; the multisig bonus is not.
+Deployed on **Sepolia** and source-verified on Etherscan (Exact Match). Local tests pass; public transfers, approvals, delegated spending, and revocation were demonstrated. React token operations are implemented. The multisig treasury is deployed, verified, and funded; React treasury controls are implemented. Public multisig demonstration remains pending.
 
 ## Choices
 
@@ -52,4 +52,12 @@ Brand PNGs are in `client/public/`, cropped from the provided `client/logo-sourc
 
 The client background loops `client/public/bg-h264.mp4` silently beneath a sage-to-lime gradient overlay; reduced-motion users see a static background.
 
-Next: finish the defense review, implement/test/deploy the multisig bonus and its client flows, then complete final checks before separate school submission.
+Next: demonstrate multisig through the client, finish the defense review, and complete final checks before separate school submission.
+
+[Multisig rules and limitations](documentation/multisig.md): a separate fixed two-of-three treasury distributes existing CLUB42. `npm test` runs both contract suites.
+
+Treasury deployment tooling is ready at `/treasury` on the local deployment server; see [bonus deployment instructions](deployment/README.md#deploy-the-bonus-treasury). Deployment, verification, and funding succeeded.
+
+Bonus treasury deployed: [0xd433D14b92c44A608607590eb323BEd9F368D6F4](https://sepolia.etherscan.io/address/0xd433D14b92c44A608607590eb323BEd9F368D6F4). Configuration checked on-chain and source verified (Exact Match); funded with 1,000 CLUB42. Client controls are implemented; public multisig execution demonstration remains pending.
+
+React now includes a Treasury tab for its balance, paginated proposals, separate organizer approvals, and execution. Public end-to-end multisig demonstration remains pending.

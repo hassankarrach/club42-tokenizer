@@ -8,7 +8,7 @@
     "verification:input": "node deployment/verification-input.cjs",
     "deploy:local": "npm run compile && node deployment/serve.cjs",
     "compile": "node deployment/compile.cjs",
-    "test": "npm run compile && node code/tests/token.cjs"
+    "test": "npm run compile && node code/tests/token.cjs && node code/tests/treasury.cjs"
   },
   "keywords": [],
   "author": "",

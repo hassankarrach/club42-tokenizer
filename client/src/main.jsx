@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { ethers } from 'ethers';
 import deployment from '../../deployment/sepolia.json';
 import './style.css';
+import Treasury, { TREASURY_ABI } from './Treasury.jsx';
+import treasuryRecord from '../../deployment/treasury-sepolia.json';
 
 // Only the public interface is needed here; deployment bytecode and keys stay out.
 const ABI = ['function balanceOf(address) view returns (uint256)', 'function totalSupply() view returns (uint256)', 'function transfer(address,uint256) returns (bool)', 'function allowance(address,address) view returns (uint256)', 'function approve(address,uint256) returns (bool)', 'function transferFrom(address,address,uint256) returns (bool)'];
@@ -21,6 +23,8 @@ const format = value => ethers.formatUnits(value, 18);
 const message = error => {
   if (error.code === 'ACTION_REJECTED' || error.code === 4001) return 'Request cancelled in your wallet.';
   const name = error.revert?.name;
+  const treasuryMessages = { NotOrganizer: 'Only an authorized organizer can perform this action.', AlreadyApproved: 'This organizer has already approved the proposal.', AlreadyExecuted: 'This proposal has already been executed.', InsufficientApprovals: 'Two distinct organizer approvals are required.', InvalidProposal: 'The proposal does not exist.', InvalidRecipient: 'The treasury rejected this recipient.', InvalidAmount: 'Enter a positive token amount.' };
+  if (treasuryMessages[name]) return treasuryMessages[name];
   if (name === 'ERC20InsufficientAllowance') return 'This account does not have enough allowance to spend these tokens. Ask the token owner to approve it first.';
   if (name === 'ERC20InsufficientBalance') return 'The token owner does not have enough CLUB42 for this transfer.';
   if (['ERC20InvalidSender', 'ERC20InvalidReceiver', 'ERC20InvalidApprover', 'ERC20InvalidSpender'].includes(name)) return 'The contract rejected an invalid account address.';
@@ -39,6 +43,7 @@ function App() {
   function setErrorNotice(text) { updateNotice(text); setNoticeIsError(true); }
   const [pending, setPending] = useState(false);
   const [hash, setHash] = useState('');
+  const [treasuryRevision, setTreasuryRevision] = useState(0);
   const [mode, setMode] = useState('transfer');
   const [to, setTo] = useState('');
   const [owner, setOwner] = useState('');
@@ -123,6 +128,24 @@ function App() {
     } catch (e) { setErrorNotice(submitted ? `Transaction submitted; check its explorer link before retrying. ${message(e)}` : message(e)); }
     finally { locked.current = false; setPending(false); }
   }
+  async function treasuryAction(method, args) {
+    if (locked.current) return;
+    locked.current = true; setPending(true); setHash('');
+    let submitted = false;
+    try {
+      if (await wallet.request({ method: 'eth_chainId' }) !== CHAIN) throw new Error('Switch to Sepolia first.');
+      const signer = await new ethers.BrowserProvider(wallet).getSigner();
+      if ((await signer.getAddress()).toLowerCase() !== account.toLowerCase()) throw new Error('Account changed. Reconnect before submitting.');
+      const contract = new ethers.Contract(treasuryRecord.contractAddress, TREASURY_ABI, signer);
+      await contract[method].staticCall(...args);
+      setNotice(`Review treasury ${method} in MetaMask. Check the account and Sepolia network.`);
+      const tx = await contract[method](...args);
+      submitted = true; setHash(tx.hash); setNotice('Treasury transaction submitted. Waiting for confirmation…');
+      await tx.wait(); setNotice('Treasury transaction confirmed on Sepolia.');
+      setTreasuryRevision(n => n + 1); await refresh();
+    } catch (e) { setErrorNotice(submitted ? `Submitted; inspect the explorer link before retrying. ${message(e)}` : message(e)); }
+    finally { locked.current = false; setPending(false); }
+  }
   async function checkAllowance() {
     try {
       const version = revision.current;
@@ -148,7 +171,8 @@ function App() {
       <div className="card-copy"><h3>Club42 Membership</h3><p>Your credits. Your control.</p></div>
       <div className="card-bottom"><span>{account ? short(account) : 'Wallet not connected'}</span><button className="card-refresh" aria-label="Refresh balance" title="Refresh balance" disabled={!ready || pending} onClick={() => refresh().catch(e => setErrorNotice(message(e)))}>↻</button></div>
     </article><article className="details"><div><span>Fixed total supply</span><strong>{supply === null ? '42,000' : Number(format(supply)).toLocaleString('en-US')} CLUB42{supply === null ? ' · configured' : ''}</strong></div><div><span>Token standard</span><strong>ERC-20 · 18 decimals</strong></div><div><span>Contract</span><a href={`${deployment.explorer}#code`} target="_blank" rel="noreferrer">{short(deployment.contractAddress)} ↗</a></div><p>Supply was created once at deployment. No administrator can mint additional tokens or seize your balance.</p></article></div>
-    <article className="actions"><div className="tabs" role="group" aria-label="Token operation">{[['transfer','Send'],['approve','Approve'],['transferFrom','Spend allowance']].map(([value,label]) => <button key={value} className={mode === value ? 'active' : ''} disabled={pending} onClick={() => { setMode(value); setAllowance(''); }}>{label}</button>)}</div>
+    <article className="actions"><div className="tabs" role="group" aria-label="Token operation">{[['transfer','Send'],['approve','Approve'],['transferFrom','Spend allowance'],['treasury','Treasury']].map(([value,label]) => <button key={value} className={mode === value ? 'active' : ''} disabled={pending} onClick={() => { setMode(value); setAllowance(''); }}>{label}</button>)}</div>
+    {mode === 'treasury' ? <Treasury wallet={wallet} account={account} ready={ready} pending={pending} act={treasuryAction} reportError={e => setErrorNotice(message(e))} revision={treasuryRevision}/> : <>
     <h2>{mode === 'transfer' ? 'Send club credits' : mode === 'approve' ? 'Grant spending permission' : 'Use an allowance'}</h2><p>{mode === 'transfer' ? 'Move tokens from your wallet to another member.' : mode === 'approve' ? 'This address can spend your tokens up to the amount you set. Enter 0 to revoke permission. Approval replaces the existing allowance.' : 'Move tokens from an account that has approved your connected wallet.'}</p>
     <form onSubmit={execute}><fieldset disabled={!ready || pending}>
     {mode === 'transferFrom' && <label>Token owner<input value={owner} onChange={e => { setOwner(e.target.value); setAllowance(''); }} placeholder="0x…" required spellCheck="false"/></label>}
@@ -156,7 +180,7 @@ function App() {
     <label>Amount <span>CLUB42</span><input value={amount} onChange={e => setAmount(e.target.value)} placeholder="100" inputMode="decimal" required/></label>
     {mode !== 'transfer' && <><button type="button" className="subtle" onClick={checkAllowance}>Check current allowance</button>{allowance && <p>Allowance: {allowance}</p>}{mode === 'approve' && <p className="hint">Only approve an address you trust. To change a non-zero allowance, revoke it first and wait for confirmation.</p>}</>}
     <button className="primary" type="submit">{pending ? 'Transaction in progress…' : mode === 'transfer' ? 'Review transfer in MetaMask →' : mode === 'approve' ? 'Review approval in MetaMask →' : 'Review delegated transfer →'}</button>
-    </fieldset></form><p className="hint">Amounts use whole tokens and decimals. Gas is paid separately in SepoliaETH.</p><section className={`status${noticeIsError ? ' status-error' : ''}`} role={noticeIsError ? 'alert' : 'status'} aria-live={noticeIsError ? 'assertive' : 'polite'}><span className="eyebrow">WALLET ACTIVITY</span><p>{noticeIsError && <strong>Error: </strong>}{notice}</p>{hash && <a href={`https://sepolia.etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer">View transaction ↗</a>}</section></article></section>
+    </fieldset></form><p className="hint">Amounts use whole tokens and decimals. Gas is paid separately in SepoliaETH.</p></>}<section className={`status${noticeIsError ? ' status-error' : ''}`} role={noticeIsError ? 'alert' : 'status'} aria-live={noticeIsError ? 'assertive' : 'polite'}><span className="eyebrow">WALLET ACTIVITY</span><p>{noticeIsError && <strong>Error: </strong>}{notice}</p>{hash && <a href={`https://sepolia.etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer">View transaction ↗</a>}</section></article></section>
 
 
   </main></>;

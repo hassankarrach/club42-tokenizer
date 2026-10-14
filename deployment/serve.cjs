@@ -5,6 +5,9 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const routes = {
   '/': ['deployment/index.html', 'text/html'],
+  '/treasury': ['deployment/treasury.html', 'text/html'],
+  '/treasury-config.json': ['deployment/treasury-config.json', 'application/json'],
+  '/treasury-artifact.json': ['artifacts/Club42Treasury.json', 'application/json'],
   '/deploy.js': ['deployment/deploy.js', 'text/javascript'],
   '/ethers.js': ['node_modules/ethers/dist/ethers.umd.min.js', 'text/javascript'],
   '/artifact.json': ['artifacts/Club42.json', 'application/json']

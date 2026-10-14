@@ -1,0 +1,23 @@
+{
+  "network": "Sepolia",
+  "chainId": 11155111,
+  "contractAddress": "0xd433D14b92c44A608607590eb323BEd9F368D6F4",
+  "token": "0x200c145609fDC02067f8b629368BA397153B9598",
+  "organizers": [
+    "0xA798E1210b6e5803Bf491944713Bb5BB5ed3D330",
+    "0xe8Ef80B64D6111523c2C96485dcD1B7D847E3f9b",
+    "0xE270edD9ad1F223Fd0e393c809EA6C417818f188"
+  ],
+  "requiredApprovals": 2,
+  "deployer": "0xA798E1210b6e5803Bf491944713Bb5BB5ed3D330",
+  "transactionHash": "0x3ca9b7745474cc84f5665b38494940c47d04be0d0b45776513223fd603474ed6",
+  "blockNumber": 11911165,
+  "explorer": "https://sepolia.etherscan.io/address/0xd433D14b92c44A608607590eb323BEd9F368D6F4",
+  "sourceVerification": "verified (exact match)",
+  "funding": {
+    "transactionHash": "0x740da96c68d38639f48c5b55893454487dcee0c72bbf4ca4e859ea934b835c46",
+    "amount": "1000",
+    "from": "0xA798E1210b6e5803Bf491944713Bb5BB5ed3D330",
+    "blockNumber": 11911195
+  }
+}
