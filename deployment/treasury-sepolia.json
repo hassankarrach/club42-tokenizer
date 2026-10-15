@@ -19,5 +19,15 @@
     "amount": "1000",
     "from": "0xA798E1210b6e5803Bf491944713Bb5BB5ed3D330",
     "blockNumber": 11911195
+  },
+  "demonstration": {
+    "proposalId": 0,
+    "recipient": "0xe8Ef80B64D6111523c2C96485dcD1B7D847E3f9b",
+    "amount": "100.0",
+    "executionTransactionHash": "0xadf30fa7e1bef0bb8ee4575e31901d47319c16e8df8e4fdfe6ff6ba60a6a35bb",
+    "executionBlock": 11917202,
+    "executor": "0xE270edD9ad1F223Fd0e393c809EA6C417818f188",
+    "approvals": 2,
+    "replaySimulation": "AlreadyExecuted"
   }
 }

@@ -1,6 +1,6 @@
 # Multisig treasury (bonus)
 
-`code/Club42Treasury.sol` holds existing CLUB42 tokens. It does not change the token contract or create more tokens. Deployed and source-verified on Sepolia, funded with 1,000 CLUB42. Local tests pass. React controls are implemented; public proposal/approval/execution demonstration is pending.
+`code/Club42Treasury.sol` holds existing CLUB42 tokens. It does not change the token contract or create more tokens. Deployed and source-verified on Sepolia, funded with 1,000 CLUB42. Local tests pass. React controls are implemented; public proposal/approval/execution demonstration succeeded.
 
 ## Rules
 
@@ -31,3 +31,5 @@ Open the Treasury tab with MetaMask on Sepolia. It shows the treasury balance, y
 An organizer enters recipient/amount to propose, then approves separately. Switch to a second organizer to approve again. Execute becomes available after two approvals. Executed proposals cannot be approved/executed again. Non-organizers can read but cannot use write controls. Contract checks still enforce all permissions independently of the UI.
 
 Every action simulates before asking MetaMask to sign. Activity/error messages and transaction links appear at the panel bottom. No automatic notifications are sent to closed wallets.
+
+Public demonstration: proposal #0 sent 100 CLUB42 to Member after approvals from the original account and Organizer 3. [Execution transaction](https://sepolia.etherscan.io/tx/0xadf30fa7e1bef0bb8ee4575e31901d47319c16e8df8e4fdfe6ff6ba60a6a35bb) succeeded; verified balances were treasury 900 and member 210, with total supply 42,000. A read-only repeat-execution attempt reverted with AlreadyExecuted.

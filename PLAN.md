@@ -55,3 +55,7 @@ UI: light fixed-viewport app with internal scrolling, preserved black/lime walle
 ## Save request
 
 User requested updating documentation/handoff and pushing current changes to GitHub main on 2026-10-14, then continuing later. No public treasury proposal, approval, or execution has been demonstrated yet.
+
+## Public bonus demonstration — 2026-10-15
+
+User created proposal #0 for 100 CLUB42 to Member, approved with original account and Organizer 3, then executed with Organizer 3. Independently checked successful tx 0xadf30fa7e1bef0bb8ee4575e31901d47319c16e8df8e4fdfe6ff6ba60a6a35bb (block 11917202), treasury Executed event, token Transfer event, proposal executed=true with two approvals. Treasury balance 900, member 210, total supply 42,000. Read-only replay simulation rejects AlreadyExecuted. Receipt outer destination is wallet routing contract; treasury event/state confirms execution. Initial unsuccessful wallet attempt had no confirmed failed treasury execution receipt; cause unresolved. Demonstration saved in deployment/treasury-sepolia.json. Remaining: final documentation/status cleanup, final tests/build and requested push, wallet edge-case review, code defense preparation and separate submission.

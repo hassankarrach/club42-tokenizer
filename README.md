@@ -2,7 +2,7 @@
 
 Club42 is a fixed-supply token representing internal club credits. Members hold and transfer credits using their wallets.
 
-Deployed on **Sepolia** and source-verified on Etherscan (Exact Match). Local tests pass; public transfers, approvals, delegated spending, and revocation were demonstrated. React token operations are implemented. The multisig treasury is deployed, verified, and funded; React treasury controls are implemented. Public multisig demonstration remains pending.
+Deployed on **Sepolia** and source-verified on Etherscan (Exact Match). Local tests pass; public transfers, approvals, delegated spending, and revocation were demonstrated. React token operations are implemented. The multisig treasury is deployed, verified, and funded; React treasury controls are implemented. Public multisig proposal, two approvals, and execution were demonstrated.
 
 ## Choices
 
@@ -58,6 +58,6 @@ Next: demonstrate multisig through the client, finish the defense review, and co
 
 Treasury deployment tooling is ready at `/treasury` on the local deployment server; see [bonus deployment instructions](deployment/README.md#deploy-the-bonus-treasury). Deployment, verification, and funding succeeded.
 
-Bonus treasury deployed: [0xd433D14b92c44A608607590eb323BEd9F368D6F4](https://sepolia.etherscan.io/address/0xd433D14b92c44A608607590eb323BEd9F368D6F4). Configuration checked on-chain and source verified (Exact Match); funded with 1,000 CLUB42. Client controls are implemented; public multisig execution demonstration remains pending.
+Bonus treasury deployed: [0xd433D14b92c44A608607590eb323BEd9F368D6F4](https://sepolia.etherscan.io/address/0xd433D14b92c44A608607590eb323BEd9F368D6F4). Configuration checked on-chain and source verified (Exact Match); funded with 1,000 CLUB42. Client controls are implemented; public multisig execution demonstration succeeded.
 
-React now includes a Treasury tab for its balance, paginated proposals, separate organizer approvals, and execution. Public end-to-end multisig demonstration remains pending.
+React now includes a Treasury tab for its balance, paginated proposals, separate organizer approvals, and execution. Public multisig demonstration succeeded; the treasury held 900 CLUB42 afterward.
