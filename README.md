@@ -14,7 +14,7 @@ Deployed on **Sepolia** and source-verified on Etherscan (Exact Match). Local te
 
 ## Run
 
-Use Node.js 22 (tested on school Linux with 22.23.3; no sudo needed). In this checkout, activate the ignored local installation first:
+Use Node.js 22 (tested on school Linux with 22.23.3; no sudo needed). On this machine, new Bash/Zsh terminals select the local Node installation automatically. If needed in another shell, activate it with:
 
 ```sh
 export PATH="$PWD/.tools/node-v22.23.3-linux-x64/bin:$PATH"
@@ -52,12 +52,16 @@ Brand PNGs are in `client/public/`, cropped from the provided `client/logo-sourc
 
 The client background loops `client/public/bg-h264.mp4` silently beneath a sage-to-lime gradient overlay; reduced-motion users see a static background.
 
-Next: demonstrate multisig through the client, finish the defense review, and complete final checks before separate school submission.
+Next: rehearse deployment, finish the defense review, and complete final checks before separate school submission.
 
 [Multisig rules and limitations](documentation/multisig.md): a separate fixed two-of-three treasury distributes existing CLUB42. `npm test` runs both contract suites.
 
-Treasury deployment tooling is ready at `/treasury` on the local deployment server; see [bonus deployment instructions](deployment/README.md#deploy-the-bonus-treasury). Deployment, verification, and funding succeeded.
+Token and treasury deployment are available at `/deploy` in the React client; see [bonus deployment instructions](deployment/README.md#deploy-the-bonus-treasury). Deployment, verification, and funding succeeded.
 
 Bonus treasury deployed: [0xd433D14b92c44A608607590eb323BEd9F368D6F4](https://sepolia.etherscan.io/address/0xd433D14b92c44A608607590eb323BEd9F368D6F4). Configuration checked on-chain and source verified (Exact Match); funded with 1,000 CLUB42. Client controls are implemented; public multisig execution demonstration succeeded.
 
 React now includes a Treasury tab for its balance, paginated proposals, separate organizer approvals, and execution. Public multisig demonstration succeeded; the treasury held 900 CLUB42 afterward.
+
+To rehearse deployment, run `npm run client:dev` and open http://127.0.0.1:5173/deploy. Client dev/build commands compile contracts automatically. The deployment view does not update existing contract records.
+
+Defense preparation: [saved correction sheet](documentation/correction-sheet.txt) and [provenance and preparation notes](documentation/correction-sheet-notes.md). The sheet explicitly calls for live deployment; its official version has not been verified.

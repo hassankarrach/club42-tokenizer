@@ -3,10 +3,11 @@ import { createRoot } from 'react-dom/client';
 import { ethers } from 'ethers';
 import deployment from '../../deployment/sepolia.json';
 import './style.css';
+import Deploy from './Deploy.jsx';
 import Treasury, { TREASURY_ABI } from './Treasury.jsx';
 import treasuryRecord from '../../deployment/treasury-sepolia.json';
 
-// Only the public interface is needed here; deployment bytecode and keys stay out.
+// Token operations use the public interface; /deploy loads compiled deployment artifacts.
 const ABI = ['function balanceOf(address) view returns (uint256)', 'function totalSupply() view returns (uint256)', 'function transfer(address,uint256) returns (bool)', 'function allowance(address,address) view returns (uint256)', 'function approve(address,uint256) returns (bool)', 'function transferFrom(address,address,uint256) returns (bool)'];
 // Include custom errors so ethers can decode reverted simulations.
 ABI.push(
@@ -45,6 +46,19 @@ function App() {
   const [hash, setHash] = useState('');
   const [treasuryRevision, setTreasuryRevision] = useState(0);
   const [mode, setMode] = useState('transfer');
+  const [isDeploy, setIsDeploy] = useState(window.location.pathname.replace(/\/$/, '') === '/deploy');
+  useEffect(() => {
+    const changed = () => setIsDeploy(window.location.pathname.replace(/\/$/, '') === '/deploy');
+    window.addEventListener('popstate', changed);
+    return () => window.removeEventListener('popstate', changed);
+  }, []);
+  function navigate(event, path) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (locked.current) return;
+    window.history.pushState({}, '', path);
+    setIsDeploy(path === '/deploy');
+  }
   const [to, setTo] = useState('');
   const [owner, setOwner] = useState('');
   const [amount, setAmount] = useState('');
@@ -162,10 +176,10 @@ function App() {
       <div className="video-overlay"/>
     </div>
     <main>
-    <header><a className="brand" href="#" aria-label="Club42 home"><img src="/club42-logo.png" alt="Club42"/></a><div className="connection"><span className="network">● Sepolia testnet</span><button onClick={connect} disabled={pending}>{account ? `Switch account · ${short(account)}` : 'Connect MetaMask'}</button></div></header>
+    <header><a className="brand" href="#" aria-label="Club42 home"><img src="/club42-logo.png" alt="Club42"/></a><div className="connection"><a href={isDeploy ? "/" : "/deploy"} onClick={e => navigate(e, isDeploy ? "/" : "/deploy")}>{isDeploy ? "Token" : "Deploy"}</a><span className="network">● Sepolia testnet</span><button onClick={connect} disabled={pending}>{account ? `Switch account · ${short(account)}` : 'Connect MetaMask'}</button></div></header>
     <section className="intro"><p className="eyebrow">YOUR CLUB. YOUR CREDITS.</p><h1>A place for your<br/><em>Club42 tokens.</em></h1><p>Hold, send, and authorize club credits.<br/>Every transaction stays visible on Sepolia.</p></section>
     {account && chain !== CHAIN && <aside className="warning">Your wallet is on another network. <button onClick={switchNetwork} disabled={pending}>Switch to Sepolia</button></aside>}
-    <section className="layout"><div><article className="balance">
+    {isDeploy ? <Deploy wallet={wallet} account={account} ready={ready} pending={pending} setPending={setPending} locked={locked} report={setNotice} reportError={e => setErrorNotice(message(e))} setHash={setHash}/> : <section className="layout"><div><article className="balance">
       <div className="card-art" aria-hidden="true"><video className="card-video" autoPlay muted loop playsInline preload="metadata" src="/bg-h264.mp4"/><svg viewBox="0 0 800 310" preserveAspectRatio="none"><defs><clipPath id="card-cut"><path d="M80 0H720Q800 0 800 80V220Q800 300 720 300H460C405 300 380 230 315 230H80Q0 230 0 150V80Q0 0 80 0Z"/></clipPath><filter id="card-blur"><feGaussianBlur stdDeviation="42"/></filter></defs><g clipPath="url(#card-cut)"><path fill="#12630b" d="M0 0H800V310H0Z"/><g filter="url(#card-blur)"><ellipse fill="#c5ff05" cx="210" cy="65" rx="180" ry="100"/><ellipse fill="#a3e50b" cx="510" cy="270" rx="250" ry="90"/><ellipse fill="#e3ffb0" cx="90" cy="230" rx="75" ry="110"/><ellipse fill="#398c00" cx="365" cy="175" rx="90" ry="100"/></g></g></svg></div>
       <div className="card-top"><span className="card-mark" aria-hidden="true"><i/><i/></span><div className="card-amount"><h2>{balance === null ? '—' : format(balance)}</h2><p>TOTAL BALANCE · CLUB42</p></div></div>
       <div className="card-copy"><h3>Club42 Membership</h3><p>Your credits. Your control.</p></div>
@@ -180,8 +194,8 @@ function App() {
     <label>Amount <span>CLUB42</span><input value={amount} onChange={e => setAmount(e.target.value)} placeholder="100" inputMode="decimal" required/></label>
     {mode !== 'transfer' && <><button type="button" className="subtle" onClick={checkAllowance}>Check current allowance</button>{allowance && <p>Allowance: {allowance}</p>}{mode === 'approve' && <p className="hint">Only approve an address you trust. To change a non-zero allowance, revoke it first and wait for confirmation.</p>}</>}
     <button className="primary" type="submit">{pending ? 'Transaction in progress…' : mode === 'transfer' ? 'Review transfer in MetaMask →' : mode === 'approve' ? 'Review approval in MetaMask →' : 'Review delegated transfer →'}</button>
-    </fieldset></form><p className="hint">Amounts use whole tokens and decimals. Gas is paid separately in SepoliaETH.</p></>}<section className={`status${noticeIsError ? ' status-error' : ''}`} role={noticeIsError ? 'alert' : 'status'} aria-live={noticeIsError ? 'assertive' : 'polite'}><span className="eyebrow">WALLET ACTIVITY</span><p>{noticeIsError && <strong>Error: </strong>}{notice}</p>{hash && <a href={`https://sepolia.etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer">View transaction ↗</a>}</section></article></section>
-
+    </fieldset></form><p className="hint">Amounts use whole tokens and decimals. Gas is paid separately in SepoliaETH.</p></>}<section className={`status${noticeIsError ? ' status-error' : ''}`} role={noticeIsError ? 'alert' : 'status'} aria-live={noticeIsError ? 'assertive' : 'polite'}><span className="eyebrow">WALLET ACTIVITY</span><p>{noticeIsError && <strong>Error: </strong>}{notice}</p>{hash && <a href={`https://sepolia.etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer">View transaction ↗</a>}</section></article></section>}
+    {isDeploy && <section className={`status${noticeIsError ? ' status-error' : ''}`} role={noticeIsError ? 'alert' : 'status'}><p>{notice}</p>{hash && <a href={`https://sepolia.etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer">View deployment transaction ↗</a>}</section>}
 
   </main></>;
 }

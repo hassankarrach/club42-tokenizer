@@ -4,7 +4,7 @@ Updated 2026-10-14. Read before continuing.
 
 ## User preferences and constraints
 
-Explain one concept at a time and check understanding. The user wants to defend their code, with a mock correction covering fundamentals through tricky implementation/security questions. No verified correction sheet has been found; full provided subject v1.1 is in documentation/subject-v1.1.txt.
+Explain one concept at a time and check understanding. The user wants to defend their code, with a mock correction covering fundamentals through tricky implementation/security questions. A user-provided correction sheet is saved in documentation/correction-sheet.txt, with provenance and preparation notes in documentation/correction-sheet-notes.md. Its official status/version is unverified; full provided subject v1.1 is in documentation/subject-v1.1.txt.
 
 Preserve fixed supply. Source/tests belong in code/, deployment tools in deployment/, docs in documentation/, React in client/. Testnets only; user signs in MetaMask. Never commit secrets, .env, dependencies, .tools, or generated build artifacts. GitHub origin is a private working copy; school submission is separate and requires an explicit request.
 
@@ -38,7 +38,7 @@ npm run client:dev
 
 Client: http://127.0.0.1:5173 in Brave. Compiler: solc 0.8.30, optimizer 200 runs, Paris EVM. npm test compiles and runs token/treasury suites. Ganache native warning falls back successfully to JavaScript. npm run client:build builds React.
 
-Deployment server: npm run deploy:local; http://127.0.0.1:4243/treasury deploys treasury (root deploys another token). Both contracts already deployed; avoid accidental redeployment. npm run verification:input -- Club42Treasury creates ignored JSON plus encoded constructor arguments; token verification uses command without the argument.
+Deployment UI: run npm run client:dev and open http://127.0.0.1:5173/deploy; choose token or treasury. The standalone deployment server was removed. Client dev/build commands compile contracts automatically. Both contracts already deployed; avoid accidental redeployment. npm run verification:input -- Club42Treasury creates ignored JSON plus encoded constructor arguments; token verification uses command without the argument.
 
 React token operations and account switching were exercised. Treasury.jsx now reads balance/organizer status/proposals with ten-item pages and 15-second refresh, and provides signer-controlled propose/approve/execute with simulation, shared transaction lock, signer/network checks, and explorer/error feedback. Browser treasury flow is not yet demonstrated.
 
@@ -59,3 +59,13 @@ User requested updating documentation/handoff and pushing current changes to Git
 ## Public bonus demonstration — 2026-10-15
 
 User created proposal #0 for 100 CLUB42 to Member, approved with original account and Organizer 3, then executed with Organizer 3. Independently checked successful tx 0xadf30fa7e1bef0bb8ee4575e31901d47319c16e8df8e4fdfe6ff6ba60a6a35bb (block 11917202), treasury Executed event, token Transfer event, proposal executed=true with two approvals. Treasury balance 900, member 210, total supply 42,000. Read-only replay simulation rejects AlreadyExecuted. Receipt outer destination is wallet routing contract; treasury event/state confirms execution. Initial unsuccessful wallet attempt had no confirmed failed treasury execution receipt; cause unresolved. Demonstration saved in deployment/treasury-sepolia.json. Remaining: final documentation/status cleanup, final tests/build and requested push, wallet edge-case review, code defense preparation and separate submission.
+
+## Integrated deployment UI — 2026-10-16
+
+Token and treasury deployment now share the React client at `/deploy` and its wallet connection. Materials remain in deployment/; the subject does not require the UI source there. Fee estimation, Sepolia/account checks, submission locking, explorer links, and initial-state readback are included. Existing deployment records are not automatically overwritten. Standalone deployment web assets/server and deploy:local command removed. Manual wallet rehearsal remains pending; no fresh public deployment was performed for this change. Bash/Zsh startup files on this machine now select the project-local Node 22 automatically.
+
+Validation: `npm run client:build` passed (including automatic contract compilation), `git diff --check` passed, and the dev server returned the client entry point for `/deploy`. Wallet signing/cancellation and account/network-change flows require manual browser review.
+
+## Correction sheet saved — 2026-10-16
+
+Preserved the full user-pasted EvalHub Tokenizer checklist in documentation/correction-sheet.txt. Provenance and subject comparison are in documentation/correction-sheet-notes.md. Prepare for live redeployment during correction; guided user rehearsal is still pending. User requested saving and pushing the current work to the existing private GitHub origin; school submission remains separate.

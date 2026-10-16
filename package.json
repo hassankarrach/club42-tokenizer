@@ -6,9 +6,10 @@
     "client:dev": "vite --config client/vite.config.mjs",
     "client:build": "vite build --config client/vite.config.mjs",
     "verification:input": "node deployment/verification-input.cjs",
-    "deploy:local": "npm run compile && node deployment/serve.cjs",
     "compile": "node deployment/compile.cjs",
-    "test": "npm run compile && node code/tests/token.cjs && node code/tests/treasury.cjs"
+    "test": "npm run compile && node code/tests/token.cjs && node code/tests/treasury.cjs",
+    "preclient:dev": "npm run compile",
+    "preclient:build": "npm run compile"
   },
   "keywords": [],
   "author": "",
