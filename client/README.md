@@ -15,3 +15,10 @@ Production build, public reads, account selection, transfers, approvals, delegat
 Open http://127.0.0.1:5173/deploy or use **Deploy** in the header. The same wallet connection supports token and treasury deployment, fee estimation, signing, and confirmation checks. Dev/build commands compile both contracts first. Generated ABI/bytecode are included in the client build; keys stay in MetaMask. New deployments do not replace the recorded contracts used by the Token view. See [deployment instructions](../deployment/README.md).
 
 The standalone deployment server has been removed. Production hosting must serve the client entry point for `/deploy` as well as `/`.
+
+## Learning and correction sessions
+
+- `/documentation` (**Documentation**) explains the project to correctors through eleven ordered chapters, interactive hash/allowance/gas examples, expandable clarifications and the actual contract/subject texts.
+- `/correction` guides a fresh token deployment and its own operations, explorer verification, optional session treasury and JSON evidence export. Session addresses are independent of the original dashboard. Progress is saved in the current browser; export before switching machines.
+
+See [the complete route guide](../documentation/client-learning-and-correction.md) for the demonstration sequence, recovery, source verification and limitations. Hosting must serve the client entry point for `/documentation` and `/correction`, as well as `/deploy` and `/`.

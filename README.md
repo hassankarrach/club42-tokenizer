@@ -14,7 +14,7 @@ Deployed on **Sepolia** and source-verified on Etherscan (Exact Match). Local te
 
 ## Run
 
-Use Node.js 22 (tested on school Linux with 22.23.3; no sudo needed). On this machine, new Bash/Zsh terminals select the local Node installation automatically. If needed in another shell, activate it with:
+Use Node.js 22 (tested on school Linux with 22.23.3; no sudo needed). The runtime is installed locally and ignored by Git. Install it again on a new school machine if `.tools/` is missing; then activate it in your terminal with:
 
 ```sh
 export PATH="$PWD/.tools/node-v22.23.3-linux-x64/bin:$PATH"
@@ -65,3 +65,17 @@ React now includes a Treasury tab for its balance, paginated proposals, separate
 To rehearse deployment, run `npm run client:dev` and open http://127.0.0.1:5173/deploy. Client dev/build commands compile contracts automatically. The deployment view does not update existing contract records.
 
 Defense preparation: [saved correction sheet](documentation/correction-sheet.txt) and [provenance and preparation notes](documentation/correction-sheet-notes.md). The sheet explicitly calls for live deployment; its official version has not been verified.
+
+Learning and correction preparation are available in the client: `/documentation` explains the project to reviewers through eleven chapters, interactive examples and expandable clarifications; `/correction` guides fresh token/treasury deployments, explorer checks, token tests and evidence export. Correction operations use the active session's addresses. The original dashboard keeps its recorded contracts. See [learning and correction guide](documentation/client-learning-and-correction.md). Progress is browser-local; export before switching school machines. The Node runtime and dependencies must also be installed on each new machine; Git does not carry ignored `.tools/` or `node_modules/`.
+
+Validation for these routes: production build, token/treasury suites and a disposable simulated-wallet integration rehearsal passed. A real browser/MetaMask and public Sepolia session remains to be rehearsed; no new public deployment or school submission was performed.
+
+Scrollbars across the client use sage tracks and green/lime thumbs, with native styling retained in forced-colors accessibility mode.
+
+The Documentation → Blocks & hashes chapter recreates Anders Brownworth’s Hash, Block and five-block Blockchain demos, with live SHA-256, nonce mining, green/red validity panels and automatic downstream hash updates. Mining runs in a cancellable worker. Attribution and MIT license are included; this illustrates proof of work, not Ethereum consensus. `npm test` includes hash/chain/mining regression checks.
+
+Documentation also includes an **NFTs & minting** chapter explaining NFT creation, ownership, metadata and what happens after minting, with a comparison to Club42 credits. This is educational material; NFT minting is not implemented by the project.
+
+Correction → Prepare includes one yellow panel for choosing the app or explorer demonstration. An expandable explorer guide keeps direct session-specific function links and exact test inputs in one place. External transaction hashes should be saved in session notes.
+
+Latest save (2026-10-17): all token, treasury and blockchain-demo tests and the production client build passed. Remaining review is a fresh real-wallet correction rehearsal and visual browser checks; school submission is separate.

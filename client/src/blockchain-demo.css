@@ -1,0 +1,255 @@
+/* Scoped recreation of the reference demo's Bootstrap-style presentation. */
+.pow-demo {
+  margin: 24px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  color: #333;
+  font:
+    14px "Lucida Grande",
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+.pow-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #222;
+  border-bottom: 1px solid #080808;
+  padding: 0 15px;
+  min-height: 50px;
+}
+.pow-navbar strong {
+  color: #9d9d9d;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 15px 0;
+}
+.pow-navbar [role="tablist"] {
+  display: flex;
+}
+.pow-navbar button {
+  border: 0;
+  border-radius: 0;
+  padding: 15px;
+  color: #9d9d9d;
+  font: inherit;
+  line-height: 20px;
+  background: transparent;
+}
+.pow-navbar button:hover:not(:disabled) {
+  color: #fff;
+  background: transparent;
+}
+.pow-navbar button[aria-selected="true"] {
+  color: #fff;
+  background: #080808;
+}
+.pow-body {
+  padding: 20px 15px 15px;
+}
+.pow-body h3 {
+  font:
+    500 36px/1.1 "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+  margin: 0 0 20px;
+  color: #333;
+}
+.pow-well {
+  min-width: 0;
+  padding: 19px;
+  margin-bottom: 20px;
+  background: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
+}
+.pow-well.pow-valid {
+  background: rgb(223, 240, 216);
+}
+.pow-well.pow-invalid {
+  background: rgb(250, 220, 220);
+}
+.pow-field {
+  display: grid;
+  grid-template-columns: 16.6667% minmax(0, 1fr);
+  gap: 0;
+  margin: 0 -15px 15px;
+}
+.pow-field:last-child {
+  margin-bottom: 0;
+}
+.pow-demo .pow-field > label {
+  display: block;
+  margin: 0;
+  padding: 7px 15px 0;
+  font:
+    700 14px/20px "Lucida Grande",
+    Helvetica,
+    Arial,
+    sans-serif;
+  text-align: right;
+  color: #333;
+}
+.pow-field > div {
+  padding: 0 15px;
+  min-width: 0;
+}
+.pow-field input,
+.pow-field textarea {
+  display: block;
+  margin: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  padding: 6px 12px;
+  color: #555;
+  height: 34px;
+  font: 14px/1.42857143 monospace;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+}
+.pow-field textarea {
+  height: 214px;
+  resize: vertical;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.pow-field input:focus,
+.pow-field textarea:focus {
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow:
+    inset 0 1px 1px rgb(0 0 0 / 8%),
+    0 0 8px rgb(102 175 233 / 60%);
+}
+.pow-field input.pow-hash {
+  background: #eee;
+}
+.pow-number {
+  display: flex;
+}
+.pow-number span {
+  float: none;
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+  background: #eee;
+  color: #555;
+  font: 14px monospace;
+}
+.pow-number input {
+  border-radius: 0 4px 4px 0;
+  min-width: 0;
+}
+.pow-demo .pow-mine {
+  color: #fff;
+  background: #337ab7;
+  border: 1px solid #2e6da4;
+  border-radius: 4px;
+  font:
+    14px/20px "Lucida Grande",
+    Helvetica,
+    Arial,
+    sans-serif;
+  padding: 6px 12px;
+}
+.pow-demo .pow-mine:hover:not(:disabled) {
+  background: #286090;
+  border-color: #204d74;
+}
+.pow-state {
+  display: inline-block;
+  margin: 8px 0 0 10px;
+  font-size: 11px;
+  color: #4b4b4b;
+}
+.pow-chain {
+  display: flex;
+  overflow-x: auto;
+  gap: 30px;
+  padding-bottom: 10px;
+  margin: 0 -5px 10px;
+}
+.pow-chain .pow-well {
+  flex: 0 0 580px;
+  margin: 0 5px 10px;
+}
+.pow-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pow-toolbar button {
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  font:
+    14px/20px "Lucida Grande",
+    Helvetica,
+    Arial,
+    sans-serif;
+  padding: 6px 12px;
+}
+.pow-toolbar button:hover {
+  background: #e6e6e6;
+}
+.pow-demo .pow-notice,
+.pow-demo .pow-explanation,
+.pow-demo .pow-credit {
+  font:
+    12px/1.6 "Lucida Grande",
+    Helvetica,
+    Arial,
+    sans-serif;
+  color: #555;
+  margin: 12px 0 0;
+}
+.pow-notice {
+  overflow-wrap: anywhere;
+}
+.pow-demo .pow-credit {
+  color: #737373;
+}
+.pow-demo .pow-credit a {
+  color: #337ab7;
+}
+@media (max-width: 600px) {
+  .pow-navbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .pow-navbar [role="tablist"] {
+    width: 100%;
+  }
+  .pow-navbar button {
+    flex: 1;
+  }
+  .pow-body h3 {
+    font-size: 30px;
+  }
+  .pow-well {
+    padding: 14px;
+  }
+  .pow-field {
+    display: block;
+    margin: 0 0 15px;
+  }
+  .pow-demo .pow-field > label {
+    text-align: left;
+    padding: 0 0 5px;
+  }
+  .pow-field > div {
+    padding: 0;
+  }
+  .pow-chain .pow-well {
+    flex-basis: min(580px, 82vw);
+  }
+}

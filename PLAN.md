@@ -1,6 +1,6 @@
 # Club42 continuation plan
 
-Updated 2026-10-14. Read before continuing.
+Updated 2026-10-17. Read before continuing.
 
 ## User preferences and constraints
 
@@ -69,3 +69,45 @@ Validation: `npm run client:build` passed (including automatic contract compilat
 ## Correction sheet saved — 2026-10-16
 
 Preserved the full user-pasted EvalHub Tokenizer checklist in documentation/correction-sheet.txt. Provenance and subject comparison are in documentation/correction-sheet-notes.md. Prepare for live redeployment during correction; guided user rehearsal is still pending. User requested saving and pushing the current work to the existing private GitHub origin; school submission remains separate.
+
+## Learning and correction routes — 2026-10-16
+
+User approved two client routes: `/documentation` for structured learning and `/correction` for phased correction sessions with freshly deployed contracts. Implemented ten learning chapters, SHA-256 block-link, gas and allowance labs, expandable defense answers, actual contract source and saved subject/checklist text. These are original teaching illustrations; hash links do not replace consensus, and Ethereum proof of stake is distinguished from mining.
+
+Correction includes preparation, token deployment, explorer/verification, initial-state reads, token tests, optional multisig and JSON export. Owner sends 100, approves 25, member spends 10, owner revokes and member simulates an exact insufficient-allowance rejection. Receipt events and before/after block-state comparisons are recorded. Manual checks remain explicitly manual. Treasury deployment accepts the session token and chosen three organizers, with separate funding, two approvals, execution and simulated one-approval/replay rejection checks. Session-specific constructor encoding is displayed for explorer verification. The original dashboard and deployment records stay linked to the original contracts; fixed-supply contracts are unchanged.
+
+Session records persist in browser localStorage, including submitted deployments and their hashes, with receipt recheck/direct deployment recovery and JSON export before a new session. Export is needed when changing school machines. No JSON import or multi-session browser library is implemented. Full usage/limits: documentation/client-learning-and-correction.md.
+
+Validation: npm run client:build and npm test passed. Disposable jsdom/Ganache simulated-wallet rehearsal passed documentation labs, complete token deployment/operations/state-event checks, session treasury deployment/funding/two approvals/execution and expected rejections, plus session restoration after navigation, simulated wrong-network write gating and cancelled wallet signing. No real browser visual QA or new public Sepolia deployment occurred. Remaining: real MetaMask cancellation/account/network-change checks, responsive browser review, source verification/public-session rehearsal and code defense. The correction sheet remains unofficial/unverified; the subject does not explicitly prescribe three redeployments.
+
+## Scrollbar styling — 2026-10-16
+
+Applied shared sage tracks and rounded green/lime scrollbar thumbs across the app shell, nested panels, source blocks and textareas. Chromium/WebKit receive hover/drag states; Firefox uses standard thin scrollbar colors. Forced-colors mode retains native styling. Production client build and whitespace checks passed; visual browser review remains pending.
+
+## Documentation audience clarified — 2026-10-16
+
+User clarified that /documentation is a presentation and explanation aid for correctors, not a student defense-training page. Reframed the route as a reviewer guide, renamed the project chapter to Project walkthrough and practice questions to Further explanation, and added an audience introduction. Removed the unofficial checklist from the rendered documentation route; its repository file remains preserved for internal preparation. Navigation now says Documentation. Build and whitespace checks passed. Preserve this audience distinction in future edits.
+
+## Reference-style blockchain demonstration — 2026-10-16
+
+User requested closely mimicking Anders Brownworth’s Hash, Block and Blockchain demos inside reviewer documentation. Inspected the live pages, stylesheet and MIT-licensed source. Replaced the simplified frozen-parent three-block lab with three tabs: live SHA-256, single block with editable block number/nonce/data and Mine, and five horizontal blocks with dynamic previous-hash propagation. Uses reference field concatenation, initial nonces and four-zero target; initial hashes match the reference. Scoped Bootstrap-style black navigation, grey hash fields, blue Mine buttons and green/red panels recreate its presentation inside the existing app. Mining runs in a cancellable worker; reset, keyboard tabs and explanatory status are included. Hash fields are selectable read-only fields. Attribution and original MIT license are preserved and displayed. No wallet or blockchain transactions occur; proof of work is explicitly distinguished from Ethereum proof of stake.
+
+Validation: npm test includes new code/tests/blockchain-demo.mjs for SHA-256 vectors, reference fixtures, downstream propagation and actual mining worker/sequential chain repair. Production build passed. DOM/worker interaction rehearsal covers tabs, typing, validity panels, mining, reset and cancellation; real-browser pixel-level review remains pending. Existing contract code and deployment records are unchanged.
+
+## NFT documentation chapter — 2026-10-17
+
+Added a reviewer-facing NFTs & minting chapter after ERC-20, bringing documentation to eleven chapters. Explains NFT identity, minting versus transfer, unminted items, transaction execution/receipts, wallet/explorer indexing, metadata/images, subsequent ownership, approvals and contract-dependent burn behavior. Includes a lifecycle illustration and ERC-20/ERC-721 comparison, with primary-source references. Educational only: no NFT contract, mint UI, deployment or changes to fixed-supply Club42. Production client build and whitespace checks passed.
+
+## Explorer alternatives for correction tests — 2026-10-17
+
+Added yellow Etherscan instruction panels below initial-state checks and every mandatory token operation: transfer, approval, delegated spending, revocation and expected rejection. Each supplies signing account, exact base-unit arguments, expected events/state and direct links to the session contract’s specific read/write function via #readContract#F<n> / #writeContract#F<n>. Checked Etherscan’s live address-page anchor parser and Club42 read/write ABI ordering. The current explorer offers Simulate (eth_call), used for the no-gas rejection check with an explicit fallback if unavailable. Instructions distinguish external writes from app-logged transactions and prevent duplicating each step in both interfaces. No contract changes. Production build and whitespace checks passed.
+
+## Consolidated correction explorer guide — 2026-10-17
+
+User requested removing repeated yellow guides because they cluttered the UI. Replaced them with one compact yellow panel in Prepare explaining app versus explorer, with an expandable centralized explorer sequence, session-specific function links and exact base-unit inputs. Links appear after deployment. No yellow panels remain in Initial state or Token tests. Production client build and whitespace checks passed.
+
+## Save and push — 2026-10-17
+
+User requested committing and pushing the latest client/documentation work to the existing private GitHub origin/main. Final npm test passed token, treasury and blockchain-demo suites; npm run client:build and git diff --check passed. Included reviewer documentation (eleven chapters including educational NFTs), reference-style hash/mining demos, session-specific correction flow, one centralized explorer guide in Prepare, scrollbar styling and supporting docs/tests/license. Contracts and original deployment records are unchanged. Generated artifacts, local runtime and dependencies remain ignored.
+
+Next: finish a fresh real-MetaMask/Sepolia correction rehearsal and browser layout review, record its evidence separately, and prepare the separate school submission only upon request. NFTs remain explanatory only. No new public deployment or school submission was performed by this save.
