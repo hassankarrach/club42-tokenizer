@@ -1,6 +1,6 @@
 # Multisig treasury (bonus)
 
-`code/Club42Treasury.sol` holds existing CLUB42 tokens. It does not change the token contract or create more tokens. Deployed and source-verified on Sepolia, funded with 1,000 CLUB42. Local tests pass. React controls are implemented; public proposal/approval/execution demonstration succeeded.
+`code/Club42Treasury.sol` holds existing CLUB42 tokens. It does not change the token contract or create more tokens. Deployed and source-verified on Sepolia, funded with 1,000 CLUB42. React controls are implemented; public proposal/approval/execution demonstration succeeded.
 
 ## Rules
 
@@ -18,11 +18,7 @@
 
 Signers and the two-of-three threshold are fixed. There is no signer replacement, proposal cancellation, approval revocation, or expiry. Losing two signer keys can lock funds. Two compromised signers can spend the reserve. Approved proposals do not reserve funds, so execution can fail if earlier proposals spend the balance. This treasury only distributes its configured token; do not send other assets.
 
-Three accounts controlled by one student demonstrate mechanics, not independent governance. In real use, different people should hold the keys. Local tests are not a security audit.
-
-## Tests
-
-`npm test` runs both token and treasury suites. Treasury checks cover configuration, deposits, unauthorized actions, invalid proposals, separate/duplicate approvals, insufficient approvals, correct movement, replay prevention, and rollback/retry after an actual mined failure.
+Three accounts controlled by one student demonstrate mechanics, not independent governance. In real use, different people should hold the keys. Source verification is not a security audit.
 
 ## React treasury controls
 

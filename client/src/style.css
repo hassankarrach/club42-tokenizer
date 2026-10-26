@@ -781,8 +781,7 @@ header,
 .study-nav small {
   color: #73796a;
 }
-.study-nav .active,
-.phase-nav .active {
+.study-nav .active {
   background: #e9f6cd;
   border-color: #8bac51;
   color: #2d4d0c;
@@ -795,8 +794,7 @@ header,
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.study-content h1,
-.session-heading h1 {
+.study-content h1 {
   font-family: "Space Grotesk", sans-serif;
   letter-spacing: -1px;
   font-size: 36px;
@@ -849,8 +847,7 @@ header,
   padding: 16px 0;
   border-top: 1px solid #d1d7c8;
 }
-.study-content summary,
-.session-log summary {
+.study-content summary {
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
@@ -862,56 +859,7 @@ header,
   gap: 12px;
   margin: 28px 0 12px;
 }
-.correction-page {
-  flex-shrink: 0;
-  padding-bottom: 25px;
-}
-.session-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-.session-contract {
-  background: #182311;
-  color: #edf5df;
-  border-radius: 16px;
-  padding: 16px 22px;
-  overflow-wrap: anywhere;
-  margin: 8px 0 20px;
-}
-.session-contract p {
-  font-size: 12px;
-  line-height: 1.6;
-}
-.phase-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-.phase-nav button {
-  font-size: 12px;
-  background: #f4f7ec;
-}
-.manual-check {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 13px;
-  line-height: 1.6;
-  padding: 10px 0;
-}
-.manual-check input {
-  width: 18px;
-  flex-shrink: 0;
-  margin: 0;
-}
-.manual-check small {
-  font-weight: 400;
-  color: #73796a;
-}
-.study-content label:not(.manual-check) {
+.study-content label {
   font-size: 13px;
 }
 .study-content input,
@@ -935,56 +883,6 @@ header,
   flex-wrap: wrap;
   font-size: 13px;
   margin: 22px 0;
-}
-.state-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin: 20px 0;
-}
-.state-grid > div {
-  background: #eef3e4;
-  border-radius: 10px;
-  padding: 12px;
-  min-width: 0;
-}
-.state-grid span {
-  display: block;
-  color: #73796a;
-  font-size: 11px;
-  margin-bottom: 7px;
-}
-.state-grid strong {
-  font-size: 13px;
-  overflow-wrap: anywhere;
-}
-.test-sequence li button {
-  display: block;
-  margin: 8px 0 20px;
-}
-.session-log {
-  margin: 20px 0;
-  background: #eef3e4;
-  padding: 18px;
-  border-radius: 16px;
-}
-.session-log article {
-  padding: 15px 0;
-  border-bottom: 1px solid #cad6b7;
-  font-size: 12px;
-}
-.session-log pre {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  font-size: 11px;
-  max-height: 260px;
-  overflow: auto;
-}
-.correction-page .deployment-view {
-  max-width: none;
-  padding: 20px;
-  margin-top: 16px;
-  overflow: visible;
 }
 .study-content code {
   overflow-wrap: anywhere;
@@ -1020,15 +918,6 @@ header,
   }
   .study-content {
     padding: 20px;
-  }
-  .session-heading h1 {
-    font-size: 28px;
-  }
-  .manual-check {
-    flex-wrap: wrap;
-  }
-  .state-grid {
-    grid-template-columns: 1fr;
   }
 }
 .source-code { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; line-height: 1.7; background: #edf1e6; padding: 18px; border-radius: 12px; max-height: 500px; overflow: auto; }
@@ -1091,26 +980,3 @@ header,
   vertical-align: top;
 }
 .nft-comparison thead { background: #e7efd9; }
-
-.explorer-test-guide {
-  margin: 14px 0 24px;
-  padding: 18px 20px;
-  border: 1px solid #d5b247;
-  border-left: 4px solid #c39a1e;
-  border-radius: 12px;
-  background: #fff4c7;
-  color: #503e0c;
-  overflow-wrap: anywhere;
-}
-.explorer-test-guide h4 { margin: 0 0 10px; font-size: 15px; }
-.study-content .explorer-test-guide p, .study-content .explorer-test-guide li {
-  color: #594616;
-  font-size: 13px;
-  line-height: 1.7;
-}
-.explorer-test-guide a { font-weight: 600; color: #684900; }
-.explorer-test-guide dl { margin: 12px 0; }
-.explorer-test-guide dl > div { display: flex; gap: 12px; padding: 7px 0; border-bottom: 1px solid #dfca83; }
-.explorer-test-guide dt { flex: 0 0 70px; font-weight: 600; }
-.explorer-test-guide dd { margin: 0; min-width: 0; }
-.study-content .explorer-test-guide .explorer-guide-note { font-size: 11px; }

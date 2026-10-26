@@ -1,53 +1,30 @@
-# Deployment and verification
+# Deploy with Remix
 
-The current token is already deployed and verified on **Sepolia**. See [sepolia.json](sepolia.json) for the address, deployer, transaction, and explorer link. Use that contract for interactions.
+The subject permits Remix and requires a separate folder for deployment materials. This folder contains these instructions and the existing Sepolia records:
 
-The deployment UI is integrated into the React client at `/deploy`. This folder holds compilation, verification, configuration, and deployment records.
+- [sepolia.json](sepolia.json): token address, network, transaction and explorer link.
+- [treasury-sepolia.json](treasury-sepolia.json): bonus treasury record, including its token and three organizer constructor arguments.
 
-## Reproduce deployment
+The recorded contracts are already deployed and verified. You can use their addresses without deploying again. The client reads these records; a fresh Remix deployment does not update them automatically.
 
-After the [root setup](../README.md#run), run:
+## Token deployment
 
-```sh
-npm run client:dev
-```
+1. Open [Remix](https://remix.ethereum.org/), create a workspace and upload `code/Club42.sol`.
+2. In the Remix copy, replace `@openzeppelin/contracts/` imports with `@openzeppelin/contracts@5.4.0/`. Keep the repository source unchanged.
+3. Select Solidity **0.8.30**, enable the optimizer with **200 runs**, set the EVM target to **Paris**, and compile.
+4. Open **Deploy & Run**, select **Club42**, and leave Value at **0**. Practice with **Remix VM** first. For public deployment, use **Browser Extension** (or **Injected Provider**) with MetaMask on **Sepolia**, chain ID **11155111**, funded with free test ETH.
+5. Deploy with no constructor arguments and review the wallet transaction before signing. Each deployment creates a new token with **42,000 CLUB42** assigned to its deployer.
+6. Save the contract address, deployer, transaction hash, network and explorer link. If intentionally replacing the recorded token, update `sepolia.json`; the existing treasury still refers to its original token.
+7. Verify the source on Sepolia Etherscan using the sources and compiler settings from this Remix build, for example through Remix's Contract Verification plugin. Select the **MIT** license and confirm **Exact Match** before recording verification success. Keep service credentials out of Git.
 
-Open http://127.0.0.1:5173/deploy in Brave:
+Remix VM is a local sandbox; it does not satisfy the public deployment requirement. Use test funds only.
 
-1. Select the intended MetaMask account on Sepolia, funded with free test ETH.
-2. Connect MetaMask using the header, select **Club42 token**, click **Estimate deployment fee**, and check the account and fee.
-3. Click **Deploy with MetaMask**, review the final details, and sign yourself.
-4. Wait for confirmation and initial supply/balance checks. Save the contract address and transaction hash; update `sepolia.json` only when intentionally replacing the recorded deployment.
-5. Stop the server with Ctrl+C.
+## Optional bonus treasury
 
-Each deployment creates a new contract with 42,000 CLUB42 assigned to its deployer. Keys stay in MetaMask. The existing client contract records are not changed automatically. If follow-up checks fail after submission, inspect the explorer before retrying. Reloading or leaving the deployment view resets its duplicate-deployment protection.
+Upload `code/Club42Treasury.sol` and compile with the same settings. Select **Club42Treasury**, then supply the token address and an array of three distinct non-zero organizer addresses. These constructor arguments must match the treasury you intend to demonstrate; the threshold is fixed at two approvals.
 
-## Explorer source verification
+Deploy, verify with the actual constructor arguments, and save the details in `treasury-sepolia.json` if replacing the recorded treasury. Deployment does not fund it: transfer tokens to its address separately.
 
-```sh
-npm run verification:input
-```
+For the evaluation walkthrough, follow the [token and multisig demonstrations](../documentation/remix-correction.md#mandatory-token-demonstration).
 
-This embeds Club42 and its imports in ignored `artifacts/Club42.standard-input.json`, then confirms self-contained compilation matches the existing artifact.
-
-On the contract's Sepolia Etherscan page, choose **Verify and Publish**:
-
-- Type: **Solidity (Standard-Json-Input)**
-- Compiler: **v0.8.30+commit.73712a01**
-- License: **MIT**
-- Upload: `artifacts/Club42.standard-input.json`
-- Constructor arguments: empty; contract: `Club42.sol:Club42` if asked
-
-The JSON specifies optimizer enabled, 200 runs, Paris EVM. Etherscan compares compilation with deployed code; verification needs no gas and is not a security audit. Confirm **Exact Match** before recording verification success.
-
-## Deploy the bonus treasury
-
-Run `npm run client:dev`, then open **http://127.0.0.1:5173/deploy**. Select **Multisig treasury** for the bonus. Connect the intended signing account on Sepolia, estimate the deployment fee, and review the token, all three organizers, threshold, and fee before deploying. Configuration is in `treasury-config.json`; signers cannot be changed after deployment. No tokens are moved automatically.
-
-After confirmation, save the address and transaction hash. Generate the explorer files:
-
-```sh
-npm run verification:input -- Club42Treasury
-```
-
-Use the same compiler/license as the token. Upload `artifacts/Club42Treasury.standard-input.json`, select `Club42Treasury.sol:Club42Treasury` if asked, and paste `artifacts/Club42Treasury.constructor-args.txt` if constructor arguments are requested. Arguments must match the configuration actually deployed. Record treasury address only after confirmed deployment. Source verification and reserve funding are separate steps.
+The optional client's compilation helper is `scripts/compile.cjs`; it is not needed for the Remix workflow.

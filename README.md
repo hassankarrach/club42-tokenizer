@@ -1,81 +1,32 @@
 # Club42 — Tokenizer
 
-Club42 is a fixed-supply token representing internal club credits. Members hold and transfer credits using their wallets.
+Club42 represents internal club credits: **42,000 CLUB42**, 18 decimals, created for the deployer once. There is no later minting or privileged administrator.
 
-Deployed on **Sepolia** and source-verified on Etherscan (Exact Match). Local tests pass; public transfers, approvals, delegated spending, and revocation were demonstrated. React token operations are implemented. The multisig treasury is deployed, verified, and funded; React treasury controls are implemented. Public multisig proposal, two approvals, and execution were demonstrated.
-
-## Choices
-
-- **Ethereum / ERC-20:** a standard interface supported by wallets and tools. Sepolia allows public testing without real funds.
-- **Solidity + OpenZeppelin 5.4.0:** readable contract code with an established ERC-20 implementation.
-- **42,000 CLUB42, 18 decimals:** all created for the deployer at deployment. Fixed supply prevents later dilution; there are no administrator privileges.
-- **solc 0.8.30, optimizer 200 runs, Paris EVM:** reproducible compilation with a compatible EVM target.
-- **ethers + Ganache:** contract interaction and disposable local tests. React provides a wallet interface.
+Ethereum's ERC-20 standard provides wallet compatibility. Solidity with OpenZeppelin 5.4.0 provides a standard implementation. Sepolia allows public testing without real funds. The bonus treasury requires two of three organizers to approve distributions of existing tokens.
 
 ## Run
 
-Use Node.js 22 (tested on school Linux with 22.23.3; no sudo needed). The runtime is installed locally and ignored by Git. Install it again on a new school machine if `.tools/` is missing; then activate it in your terminal with:
-
-```sh
-export PATH="$PWD/.tools/node-v22.23.3-linux-x64/bin:$PATH"
-```
-
-From the repository root:
+Requires Node.js 22 (22.12 or newer).
 
 ```sh
 npm ci
-npm test
 npm run client:dev
 ```
 
-Open http://127.0.0.1:5173 in Brave and connect MetaMask on Sepolia. Tests need no wallet or internet after dependency installation. `npm run compile` builds separately; `npm run client:build` builds the client.
+Open http://127.0.0.1:5173/; use MetaMask on Sepolia. `npm run compile` builds contracts; `npm run client:build` builds the optional React client.
 
-## Public contract
+## Public contracts
 
-- Network: **Sepolia**, chain ID **11155111**
-- Contract: [`0x200c145609fDC02067f8b629368BA397153B9598`](https://sepolia.etherscan.io/address/0x200c145609fDC02067f8b629368BA397153B9598#code)
-- [Deployment transaction](https://sepolia.etherscan.io/tx/0x5f2e5deecf70da9a1d0c9d97cdc267cdd9928c5403d8d911639e17c904812e5f), block 11888821
-- Machine-readable record: [deployment/sepolia.json](deployment/sepolia.json)
+Network: **Sepolia** (11155111). Both contracts are source-verified on Etherscan.
 
-## Files and guides
+- Token: [0x200c145609fDC02067f8b629368BA397153B9598](https://sepolia.etherscan.io/address/0x200c145609fDC02067f8b629368BA397153B9598#code)
+- Multisig treasury: [0xd433D14b92c44A608607590eb323BEd9F368D6F4](https://sepolia.etherscan.io/address/0xd433D14b92c44A608607590eb323BEd9F368D6F4#code)
 
-- `code/`: token and behavioral tests
-- `deployment/`: [deployment and verification](deployment/README.md)
-- `documentation/`: [concept, security, usage, and tests](documentation/README.md)
-- `client/`: [React client instructions](client/README.md)
+## Repository
 
-The [subject v1.1](documentation/subject-v1.1.txt) is preserved. See [PLAN.md](PLAN.md) for remaining review and bonus work. GitHub is the private working copy; school submission is separate. Never commit keys, recovery phrases, `.env` files, dependencies, or generated artifacts.
+- [code/](code/): token and bonus treasury contracts.
+- [deployment/](deployment/README.md): Remix deployment instructions and public deployment records.
+- [documentation/](documentation/): purpose, security, usage and Remix evaluation guide.
+- [client/](client/README.md): optional wallet interface and reviewer documentation.
 
-The client uses a viewport-height layout with internal scrolling and a black/lime wallet card.
-
-Brand PNGs are in `client/public/`, cropped from the provided `client/logo-source.png`.
-
-The client background loops `client/public/bg-h264.mp4` silently beneath a sage-to-lime gradient overlay; reduced-motion users see a static background.
-
-Next: rehearse deployment, finish the defense review, and complete final checks before separate school submission.
-
-[Multisig rules and limitations](documentation/multisig.md): a separate fixed two-of-three treasury distributes existing CLUB42. `npm test` runs both contract suites.
-
-Token and treasury deployment are available at `/deploy` in the React client; see [bonus deployment instructions](deployment/README.md#deploy-the-bonus-treasury). Deployment, verification, and funding succeeded.
-
-Bonus treasury deployed: [0xd433D14b92c44A608607590eb323BEd9F368D6F4](https://sepolia.etherscan.io/address/0xd433D14b92c44A608607590eb323BEd9F368D6F4). Configuration checked on-chain and source verified (Exact Match); funded with 1,000 CLUB42. Client controls are implemented; public multisig execution demonstration succeeded.
-
-React now includes a Treasury tab for its balance, paginated proposals, separate organizer approvals, and execution. Public multisig demonstration succeeded; the treasury held 900 CLUB42 afterward.
-
-To rehearse deployment, run `npm run client:dev` and open http://127.0.0.1:5173/deploy. Client dev/build commands compile contracts automatically. The deployment view does not update existing contract records.
-
-Defense preparation: [saved correction sheet](documentation/correction-sheet.txt) and [provenance and preparation notes](documentation/correction-sheet-notes.md). The sheet explicitly calls for live deployment; its official version has not been verified.
-
-Learning and correction preparation are available in the client: `/documentation` explains the project to reviewers through eleven chapters, interactive examples and expandable clarifications; `/correction` guides fresh token/treasury deployments, explorer checks, token tests and evidence export. Correction operations use the active session's addresses. The original dashboard keeps its recorded contracts. See [learning and correction guide](documentation/client-learning-and-correction.md). Progress is browser-local; export before switching school machines. The Node runtime and dependencies must also be installed on each new machine; Git does not carry ignored `.tools/` or `node_modules/`.
-
-Validation for these routes: production build, token/treasury suites and a disposable simulated-wallet integration rehearsal passed. A real browser/MetaMask and public Sepolia session remains to be rehearsed; no new public deployment or school submission was performed.
-
-Scrollbars across the client use sage tracks and green/lime thumbs, with native styling retained in forced-colors accessibility mode.
-
-The Documentation → Blocks & hashes chapter recreates Anders Brownworth’s Hash, Block and five-block Blockchain demos, with live SHA-256, nonce mining, green/red validity panels and automatic downstream hash updates. Mining runs in a cancellable worker. Attribution and MIT license are included; this illustrates proof of work, not Ethereum consensus. `npm test` includes hash/chain/mining regression checks.
-
-Documentation also includes an **NFTs & minting** chapter explaining NFT creation, ownership, metadata and what happens after minting, with a comparison to Club42 credits. This is educational material; NFT minting is not implemented by the project.
-
-Correction → Prepare includes one yellow panel for choosing the app or explorer demonstration. An expandable explorer guide keeps direct session-specific function links and exact test inputs in one place. External transaction hashes should be saved in session notes.
-
-Latest save (2026-10-17): all token, treasury and blockchain-demo tests and the production client build passed. Remaining review is a fresh real-wallet correction rehearsal and visual browser checks; school submission is separate.
+For evaluation, follow the [Remix deployment instructions](deployment/README.md) and [manual demonstration](documentation/remix-correction.md). `scripts/compile.cjs` generates the artifacts needed by the optional UI.

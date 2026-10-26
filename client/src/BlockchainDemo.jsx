@@ -8,7 +8,6 @@ import {
   meetsTarget,
 } from "./blockchainDemo.mjs";
 import "./blockchain-demo.css";
-import demoLicense from "../../documentation/third-party/anders-blockchain-demo-LICENSE.txt?raw";
 
 const tabs = [
   ["hash", "Hash"],
@@ -336,13 +335,9 @@ export default function BlockchainDemo() {
           >
             Anders Brownworth’s Blockchain Demo ↗
           </a>{" "}
-          (MIT license). Runs locally in your browser; no wallet, fees or
+          Runs locally in your browser; no wallet, fees or
           network transactions.
         </p>
-        <details className="pow-license">
-          <summary>Demo license & attribution</summary>
-          <pre>{demoLicense}</pre>
-        </details>
       </div>
     </section>
   );

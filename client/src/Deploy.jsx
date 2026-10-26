@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ethers } from "ethers";
 import tokenArtifact from "../../artifacts/Club42.json";
 import treasuryArtifact from "../../artifacts/Club42Treasury.json";
-import config from "../../deployment/treasury-config.json";
+import config from "../../deployment/treasury-sepolia.json";
 
 const CHAIN = "0xaa36a7";
 export default function Deploy({
@@ -15,24 +15,12 @@ export default function Deploy({
   report,
   reportError,
   setHash,
-  sessionConfig = config,
-  initialKind = "token",
-  initialResult = null,
-  onResult,
-  tokenOnly = false,
-  fixedKind = false,
 }) {
-  const [kind, setKind] = useState(initialKind);
+  const [kind, setKind] = useState("token");
   const [prepared, setPrepared] = useState(null);
-  const [result, setResult] = useState(initialResult);
-  const submitted = useRef(!!initialResult);
+  const [result, setResult] = useState(null);
+  const submitted = useRef(false);
   const revision = useRef(0);
-  useEffect(() => {
-    if (initialResult) {
-      setResult(initialResult);
-      submitted.current = true;
-    }
-  }, [initialResult]);
   useEffect(() => {
     const invalidate = () => {
       revision.current++;
@@ -53,9 +41,9 @@ export default function Deploy({
     account,
     ready,
     kind,
-    sessionConfig.token,
-    sessionConfig.organizers.join(","),
-    sessionConfig.requiredApprovals,
+    config.token,
+    config.organizers.join(","),
+    config.requiredApprovals,
   ]);
   async function session() {
     if (!wallet || (await wallet.request({ method: "eth_chainId" })) !== CHAIN)
@@ -80,18 +68,18 @@ export default function Deploy({
       let args = [];
       if (kind === "treasury") {
         if (
-          sessionConfig.requiredApprovals !== 2 ||
-          sessionConfig.organizers.length !== 3 ||
-          new Set(sessionConfig.organizers.map((a) => a.toLowerCase())).size !==
+          config.requiredApprovals !== 2 ||
+          config.organizers.length !== 3 ||
+          new Set(config.organizers.map((a) => a.toLowerCase())).size !==
             3 ||
-          [sessionConfig.token, ...sessionConfig.organizers].some(
+          [config.token, ...config.organizers].some(
             (a) =>
               !ethers.isAddress(a) || a.toLowerCase() === ethers.ZeroAddress,
           )
         )
           throw new Error("Invalid treasury configuration.");
         const token = new ethers.Contract(
-          sessionConfig.token,
+          config.token,
           [
             "function symbol() view returns(string)",
             "function totalSupply() view returns(uint256)",
@@ -103,7 +91,7 @@ export default function Deploy({
           (await token.totalSupply()) !== ethers.parseUnits("42000", 18)
         )
           throw new Error("Unexpected token metadata or supply.");
-        args = [sessionConfig.token, sessionConfig.organizers];
+        args = [config.token, config.organizers];
       }
       const factory = new ethers.ContractFactory(
         artifact.abi,
@@ -175,7 +163,6 @@ export default function Deploy({
       };
       setHash(tx.hash);
       setResult(next);
-      onResult?.(next);
       report(
         "Deployment submitted. Waiting for confirmation. Save the address and transaction; check the explorer before retrying.",
       );
@@ -186,7 +173,6 @@ export default function Deploy({
         block: receipt.blockNumber,
       };
       setResult(confirmed);
-      onResult?.(confirmed);
       if (snapshot.kind === "token") {
         const supply = await contract.totalSupply();
         if (
@@ -209,7 +195,6 @@ export default function Deploy({
           )
             throw new Error("Unexpected organizer address.");
       }
-      onResult?.({ ...confirmed, checked: true });
       report(
         `Deployment confirmed and initial state checked. ${snapshot.kind === "token" ? "42,000 CLUB42 assigned to the deployer." : "Treasury funding is a separate action."} Explorer source verification is still required.`,
       );
@@ -235,20 +220,10 @@ export default function Deploy({
         existing Club42 token and treasury remain available in the Token view.
       </p>
       <div className="tabs" role="group" aria-label="Contract to deploy">
-        {(fixedKind
-          ? [
-              [
-                initialKind,
-                initialKind === "token" ? "Club42 token" : "Multisig treasury",
-              ],
-            ]
-          : tokenOnly
-            ? [["token", "Club42 token"]]
-            : [
-                ["token", "Club42 token"],
-                ["treasury", "Multisig treasury"],
-              ]
-        ).map(([value, label]) => (
+        {[
+          ["token", "Club42 token"],
+          ["treasury", "Multisig treasury"],
+        ].map(([value, label]) => (
           <button
             key={value}
             className={kind === value ? "active" : ""}
@@ -270,10 +245,10 @@ export default function Deploy({
       ) : (
         <div className="deployment-config">
           <p>Creates an empty two-of-three treasury for this token:</p>
-          <p>{sessionConfig.token}</p>
+          <p>{config.token}</p>
           <p>Organizers:</p>
           <ol>
-            {sessionConfig.organizers.map((a) => (
+            {config.organizers.map((a) => (
               <li key={a}>{a}</li>
             ))}
           </ol>
@@ -341,9 +316,7 @@ export default function Deploy({
       )}
       <p className="hint">
         Once submitted, another deployment is blocked in this view.{" "}
-        {onResult
-          ? "The correction session also saves this protection in browser storage;"
-          : "Reloading or leaving this view resets that protection;"}{" "}
+        Reloading or leaving this view resets that protection;{" "}
         check the explorer before retrying.
       </p>
     </article>

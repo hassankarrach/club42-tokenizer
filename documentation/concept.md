@@ -6,7 +6,7 @@ Club42 represents internal club credits held by member wallets. It implements ER
 
 The constructor creates **42,000 CLUB42** for the deployer. Tokens use 18 decimals: one CLUB42 is `10^18` integer units. Transfers change balances, not total supply.
 
-There is no privileged owner role, later minting, public burning, freezing, or seizure. The deployer controls its initial reserve like any holder controls its balance. Shared treasury control requires the unimplemented multisig bonus.
+There is no privileged owner role, later minting, public burning, freezing, or seizure. The deployer controls its initial reserve like any holder controls its balance. The bonus [multisig treasury](multisig.md) provides shared control of tokens deposited into it.
 
 | Function | Purpose |
 | --- | --- |

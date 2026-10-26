@@ -5,9 +5,10 @@ import deployment from "../../deployment/sepolia.json";
 import "./style.css";
 import Deploy from "./Deploy.jsx";
 const Learn = lazy(() => import("./Learn.jsx"));
-const Correction = lazy(() => import("./Correction.jsx"));
 import Treasury, { TREASURY_ABI } from "./Treasury.jsx";
 import treasuryRecord from "../../deployment/treasury-sepolia.json";
+
+const BACKGROUND_VIDEO_URL = "https://res.cloudinary.com/pmdneorq/video/upload/v1793006147/bg-h264.mp4";
 
 // Token operations use the public interface; /deploy loads compiled deployment artifacts.
 const ABI = [
@@ -86,7 +87,7 @@ function App() {
     window.location.pathname.replace(/\/$/, "") || "/",
   );
   const isDeploy = route === "/deploy";
-  const isStudy = route === "/documentation" || route === "/correction";
+  const isStudy = route === "/documentation";
   useEffect(() => {
     const changed = () => {
       if (locked.current) {
@@ -352,7 +353,7 @@ function App() {
           loop
           playsInline
           preload="metadata"
-          src="/bg-h264.mp4"
+          src={BACKGROUND_VIDEO_URL}
         />
         <div className="video-overlay" />
       </div>
@@ -372,7 +373,6 @@ function App() {
                 ["/", "Token"],
                 ["/deploy", "Deploy"],
                 ["/documentation", "Documentation"],
-                ["/correction", "Correction"],
               ].map(([path, label]) => (
                 <a
                   key={path}
@@ -418,18 +418,6 @@ function App() {
         <Suspense fallback={<p role="status">Loading page…</p>}>
           {route === "/documentation" ? (
             <Learn />
-          ) : route === "/correction" ? (
-            <Correction
-              wallet={wallet}
-              account={account}
-              ready={ready}
-              pending={pending}
-              setPending={setPending}
-              locked={locked}
-              report={setNotice}
-              reportError={(e) => setErrorNotice(message(e))}
-              setHash={setHash}
-            />
           ) : isDeploy ? (
             <Deploy
               wallet={wallet}
@@ -454,7 +442,7 @@ function App() {
                       loop
                       playsInline
                       preload="metadata"
-                      src="/bg-h264.mp4"
+                      src={BACKGROUND_VIDEO_URL}
                     />
                     <svg viewBox="0 0 800 310" preserveAspectRatio="none">
                       <defs>
@@ -710,7 +698,7 @@ function App() {
             </section>
           )}
         </Suspense>
-        {(isDeploy || route === "/correction") && (
+        {isDeploy && (
           <section
             className={`status${noticeIsError ? " status-error" : ""}`}
             role={noticeIsError ? "alert" : "status"}

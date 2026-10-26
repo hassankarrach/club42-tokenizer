@@ -4,7 +4,7 @@ After the [root setup](../README.md#run), run `npm run client:dev` and open http
 
 The Token view uses the existing contract in `deployment/sepolia.json`; no redeployment is needed. It prefers MetaMask through EIP-6963 when Brave Wallet is also installed. Keys stay in MetaMask.
 
-See [usage and demonstration](../documentation/usage.md) for operations. If changing accounts in MetaMask does not update the page, click **Switch account** and authorize the intended account for this site.
+Use Send for your own tokens, Approve to grant or revoke an allowance, and Spend allowance from the authorized spender account. Amounts use readable token units such as `10` or `0.5`. Review the account, network and fee before signing; inspect submitted transactions on the explorer before retrying. See the [manual demonstration](../documentation/remix-correction.md) for expected behavior. If changing accounts in MetaMask does not update the page, click **Switch account** and authorize the intended account for this site.
 
 Production build, public reads, account selection, transfers, approvals, delegated spending, revocation, and decoded rejection were exercised. Wrong-network and cancellation flows still need manual review. Hosting is not configured.
 
@@ -12,13 +12,14 @@ Production build, public reads, account selection, transfers, approvals, delegat
 
 ## Deployment
 
-Open http://127.0.0.1:5173/deploy or use **Deploy** in the header. The same wallet connection supports token and treasury deployment, fee estimation, signing, and confirmation checks. Dev/build commands compile both contracts first. Generated ABI/bytecode are included in the client build; keys stay in MetaMask. New deployments do not replace the recorded contracts used by the Token view. See [deployment instructions](../deployment/README.md).
+Open http://127.0.0.1:5173/deploy or use **Deploy** in the header. The same wallet connection supports token and treasury deployment, fee estimation, signing, and confirmation checks. Dev/build commands compile both contracts first. Generated ABI/bytecode are included in the client build; keys stay in MetaMask. New deployments do not replace the recorded contracts used by the Token view. The treasury defaults come from `deployment/treasury-sepolia.json`. For evaluation, follow the [Remix deployment instructions](../deployment/README.md).
 
 The standalone deployment server has been removed. Production hosting must serve the client entry point for `/deploy` as well as `/`.
 
-## Learning and correction sessions
+## Reviewer documentation
 
-- `/documentation` (**Documentation**) explains the project to correctors through eleven ordered chapters, interactive hash/allowance/gas examples, expandable clarifications and the actual contract/subject texts.
-- `/correction` guides a fresh token deployment and its own operations, explorer verification, optional session treasury and JSON evidence export. Session addresses are independent of the original dashboard. Progress is saved in the current browser; export before switching machines.
+`/documentation` explains the project to correctors through eleven chapters, interactive hash/allowance/gas examples, expandable clarifications and actual contract/subject texts.
 
-See [the complete route guide](../documentation/client-learning-and-correction.md) for the demonstration sequence, recovery, source verification and limitations. Hosting must serve the client entry point for `/documentation` and `/correction`, as well as `/deploy` and `/`.
+Live correction deployment and contract operations use [Remix](../documentation/remix-correction.md). The Correction page has been removed. Hosting must serve the client entry point for `/documentation`, `/deploy` and `/`.
+
+Decorative background videos stream from Cloudinary; no video files are included. Without video access, the gradient and static artwork remain visible. Reduced-motion styling disables the videos.
